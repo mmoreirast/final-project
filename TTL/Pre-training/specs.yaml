@@ -15,7 +15,7 @@ model_args:
   use_fast_tokenizer: true
   model_revision: "main"
   trust_remote_code: false
-  torch_dtype: "auto"
+  torch_dtype: "bf16"
   low_cpu_mem_usage: null
   use_cache: true
   attn_implementation: "flash_attention_2"
@@ -31,7 +31,7 @@ training_args:
   output_dir: "checkpoints"
   do_train: true
   do_eval: true
-  evaluation_strategy: "steps"
+  evaluation_strategy: "step"
   eval_steps: 100000
   per_device_train_batch_size: 2
   per_device_eval_batch_size: 8

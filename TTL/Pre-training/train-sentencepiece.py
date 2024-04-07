@@ -21,7 +21,7 @@ def main(args):
 
     # Select `num_samples` from the dataset
     # According to our tests, 2 million samples is enough to train a good tokenizer without running into memory issues.
-    dataset = dataset.shuffle(seed=42).select(range(args.num_samples))
+    dataset = dataset.shuffle(seed=42).select(range(arg.num_samples))
 
     # Create a SentencePieceBPETokenizer.
     tokenizer = SentencePieceBPETokenizer()
