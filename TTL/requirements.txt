@@ -1,5 +1,5 @@
-transformers==4.38.0
-torch==2.1.0
+transformers==4.38.0.dev0
+torch==2.1.0+cu121
 pyyaml==6.0.1
 datasets==2.16.1
 wandb==0.16.2
