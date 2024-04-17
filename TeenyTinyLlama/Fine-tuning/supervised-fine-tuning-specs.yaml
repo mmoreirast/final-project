@@ -10,6 +10,7 @@ model_args:
   boi_token: "<instruction>"
   eoi_token: "</instruction>"
   chat_template: "{{bos_token}}{% for message in messages %}{% if (message['role'] == 'user') != (loop.index0 % 2 == 0) %}{{ raise_exception('Conversation roles must alternate user/assistant/user/assistant/...') }}{% endif %}{% if message['role'] == 'user' %}{{ '<instruction>' + message['content'].strip() + '</instruction>'}}{% elif message['role'] == 'assistant' %}{{ message['content'].strip() + eos_token}}{% else %}{{ raise_exception('Only user and assistant roles are supported!') }}{% endif %}{% endfor %}"
+  feature_dataset: "input" 
   attn_implementation: "flash_attention_2"
 data_args:
     dataset_name: "nicholasKluge/instruct-aira-dataset-v2"

@@ -150,7 +150,7 @@ def main(spec_file):
         )
 
         # Make a list of prompts to serve as seeds for generation.
-        seeds = [model_args.boi_token + x[0]['content'] + model_args.eoi_token for x in dataset.select(range(100))['conversations']]
+        seeds = [model_args.boi_token + x[0][model_args.feature_dataset] + model_args.eoi_token for x in dataset.select(range(100))[model_args.feature_dataset]]
 
         # Shuffle the dataset.
         dataset = dataset.shuffle(seed=training_args.seed)        
