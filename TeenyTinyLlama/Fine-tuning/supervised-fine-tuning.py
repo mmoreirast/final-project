@@ -251,7 +251,7 @@ def main(spec_file):
 
     
     # Create a formated Chat column.
-    dataset = dataset.map(lambda x: {"formatted_conversations": tokenizer.apply_chat_template(x["conversations"], tokenize=False, add_generation_prompt=False)})
+    dataset = dataset.map(lambda x: {"formatted_conversations": tokenizer.apply_chat_template(x["input"], tokenize=False, add_generation_prompt=False)})
     column_names = dataset.column_names
 
     # Tokenize all texts in the dataset.
