@@ -82,6 +82,11 @@ class ModelArguments:
         metadata={"help": "The chat template to use."},
     )
 
+    feature_dataset: Optional[str] = field(
+        default='input',
+        metadata={"help": "The column of the feature of the dataset."},
+    )
+
     attn_implementation: Optional[str] = field(
         default=None,
         metadata={

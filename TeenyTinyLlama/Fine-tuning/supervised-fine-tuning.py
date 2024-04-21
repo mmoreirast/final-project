@@ -43,6 +43,12 @@ import wandb
 import random
 import logging
 import argparse
+import datasets
+import transformers
+import huggingface_hub
+
+import re
+
 from tqdm import tqdm
 from datasets import load_dataset
 from tokenizers import AddedToken
@@ -108,9 +114,9 @@ def main(spec_file):
 
     # We are setting the verbosity of the `datasets`, `transformers` and `huggingface_hub` libraries
     # to `error` to avoid unnecessary logs.
-    datasets.utils.logging.set_verbosity_error()
-    transformers.utils.logging.set_verbosity_error()
-    huggingface_hub.utils.logging.set_verbosity_error()
+    datasets.logging.set_verbosity_error()
+    transformers.logging.set_verbosity_error()
+    huggingface_hub.logging.set_verbosity_error()
 
     # Log the status of the accelerator on all processes.
     logger.info(accelerator.state, main_process_only=False)
@@ -150,7 +156,9 @@ def main(spec_file):
         )
 
         # Make a list of prompts to serve as seeds for generation.
-        seeds = [model_args.boi_token + x[0][model_args.feature_dataset] + model_args.eoi_token for x in dataset.select(range(100))[model_args.feature_dataset]]
+        text_extraction = lambda text: re.search(r"<</SYS>(.*?)\[/INST\]", text, re.DOTALL).group(1).strip() if re.search(r"<</SYS>(.*?)\[/INST\]", text, re.DOTALL) else "Text not found among the specified tags."
+        seeds = [model_args.boi_token + text_extraction(x) + model_args.eoi_token for x in dataset.select(range(100))['input']]
+        print(seeds[:2])
 
         # Shuffle the dataset.
         dataset = dataset.shuffle(seed=training_args.seed)        

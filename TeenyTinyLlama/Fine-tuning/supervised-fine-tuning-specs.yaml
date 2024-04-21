@@ -13,12 +13,12 @@ model_args:
   feature_dataset: "input" 
   attn_implementation: "flash_attention_2"
 data_args:
-    dataset_name: "nicholasKluge/instruct-aira-dataset-v2"
-    dataset_split: "portuguese"
+    dataset_name: "rhaymison/medicine-medical_meadow_wikidoc_pt"
+    dataset_split: "train"
     validation_split_percentage: 0.1
     max_length: 2048
     preprocessing_num_workers: null
-    sanity_check: false
+    sanity_check: true
 training_args:
   output_dir: "checkpoints"
   num_train_epochs: 3
