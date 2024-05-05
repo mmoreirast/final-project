@@ -157,7 +157,7 @@ def main(spec_file):
 
         # Make a list of prompts to serve as seeds for generation.
         text_extraction = lambda text: re.search(r"<</SYS>(.*?)\[/INST\]", text, re.DOTALL).group(1).strip() if re.search(r"<</SYS>(.*?)\[/INST\]", text, re.DOTALL) else "Text not found among the specified tags."
-        seeds = [model_args.boi_token + text_extraction(x) + model_args.eoi_token for x in dataset.select(range(100))['input']]
+        seeds = [model_args.boi_token + text_extraction(x) + model_args.eoi_token for x in dataset.select(range(100))[model_args.feature_dataset]]
         print(seeds[:2])
 
         # Shuffle the dataset.
@@ -251,7 +251,7 @@ def main(spec_file):
 
     
     # Create a formated Chat column.
-    dataset = dataset.map(lambda x: {"formatted_conversations": tokenizer.apply_chat_template(x["input"], tokenize=False, add_generation_prompt=False)})
+    dataset = dataset.map(lambda x: {"formatted_conversations": tokenizer.apply_chat_template(x[model_args.feature_dataset], tokenize=False, add_generation_prompt=False)})
     column_names = dataset.column_names
 
     # Tokenize all texts in the dataset.
@@ -636,7 +636,8 @@ def main(spec_file):
     # Resume codecarbon tracking.
     tracker.stop()
     logger.info("Training complete!")
-    i# Resume wandb tracking (only in the main process).
+    
+    # Resume wandb tracking (only in the main process).
     if accelerator.is_main_process:
         if extra_args.wandb_token is not None:
             wandb.finish()
