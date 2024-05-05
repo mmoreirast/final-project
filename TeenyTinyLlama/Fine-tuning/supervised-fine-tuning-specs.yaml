@@ -43,4 +43,4 @@ extra_args:
   wandb_token: null
   wandb_log_steps: 1
   sample_every: 5000
-  mixed_precision: 'no'
+  mixed_precision: 'fp16'
