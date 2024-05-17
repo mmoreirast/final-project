@@ -4,6 +4,7 @@ import logging
 import argparse
 import datasets
 import transformers
+import huggingface_hub
 from pathlib import Path
 from tqdm.auto import tqdm
 
